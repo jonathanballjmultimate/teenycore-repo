@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teeny Core Linux — signed package repository</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 56rem; margin: 2rem auto;
+         padding: 0 1rem; color: #222; line-height: 1.5; }
+  code, pre { background: #f3f3f3; padding: .15em .35em; border-radius: 4px; }
+  pre { padding: 1rem; overflow-x: auto; }
+  h1 { border-bottom: 2px solid #eee; padding-bottom: .5rem; }
+  .badge { display: inline-block; background: #0a7d2f; color: #fff;
+           border-radius: 20px; padding: .15em .7em; font-size: .85rem; }
+  .muted { color: #777; }
+  table { border-collapse: collapse; }
+  td, th { border: 1px solid #ddd; padding: .35em .7em; text-align: left; }
+</style>
+</head>
+<body>
+<h1>Teeny Core Linux <span class="badge">"download everything"</span></h1>
+<p>The install medium is just a door. This site is the package store: a
+plain directory of tarballs behind a <strong>signify-signed index</strong>.
+Your Teeny Core box fetches it with <code>pkg</code> and installs what you
+ask for — nothing ships on the ISO itself.</p>
+
+<h2>Available packages</h2>
+<table>
+  <tr><th>Package</th><th>Version</th><th>Size</th></tr>
+  <tr><td><code>teenycore-hello</code></td><td>1.0.0</td><td>355&nbsp;B</td></tr>
+</table>
+<p class="muted">This list is generated from <code>index.txt</code> — the
+trusted catalog below always wins.</p>
+
+<h2>Verified files (the trust chain)</h2>
+<ul>
+  <li><a href="index.txt">index.txt</a> — catalog: name, version, size, sha256, deps</li>
+  <li><a href="index.txt.sig">index.txt.sig</a> — Ed25519 (signify) signature over index.txt</li>
+  <li><a href="pubkey">pubkey</a> — the verification key, baked into the ISO at
+      <code>/etc/teenycore/repo.pub</code>. Compare them — they must match.</li>
+</ul>
+
+<h2>Use it</h2>
+<pre>wifi                        # get online
+pkg update                  # fetch + verify index.txt
+pkg search &lt;term&gt;           # find stuff
+pkg install &lt;package&gt;       # download, verify sha256, install</pre>
+<pre>pkg help                    # full command list</pre>
+
+<p class="muted">If an index or package fails verification, <code>pkg</code>
+refuses it. That is the whole point.</p>
+</body>
+</html>
